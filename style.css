@@ -1,0 +1,636 @@
+/* CSS Custom Properties for theming */
+:root {
+  --primary-color: #007bff;
+  --primary-hover: #0056b3;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-color: #dee2e6;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+}
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  background: #1a1d21;
+}
+
+body {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+/* Main chat container */
+#app-root, .chat-container {
+  height: 100vh;
+  min-height: 100vh;
+  max-width: 100vw;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+/* Header */
+.chat-header {
+  background: #fff;
+  color: #3f295a;
+  padding: 1.1rem 2.2rem 1.1rem 2.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #e3d8f5;
+  font-size: 1.2rem;
+  font-weight: 600;
+  min-height: 60px;
+}
+
+.chat-header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e01e5a;
+  transition: background 0.3s;
+  box-shadow: 0 0 6px rgba(0,0,0,0.12);
+}
+
+.status-indicator.connected {
+  background: #2eb67d;
+}
+
+.status-indicator.connecting {
+  background: #ecb22e;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Messages container */
+.messages-container {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 2.2rem 3.5rem 1.5rem 3.5rem;
+  min-height: 0;
+  background: #f8f9fb;
+  scroll-behavior: smooth;
+}
+
+.messages-container::-webkit-scrollbar {
+  width: 7px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+  background: #e0e0e0;
+  border-radius: 4px;
+}
+
+.messages-container::-webkit-scrollbar-thumb:hover {
+  background: var(--dark-color);
+}
+
+/* Welcome message */
+.welcome-message {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin: 2.5rem 0 2rem 0;
+  font-size: 1.1rem;
+}
+
+/* Message styles */
+.message {
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message.sent {
+  align-items: flex-end;
+}
+
+.message.received {
+  align-items: flex-start;
+}
+
+.message.private {
+  /* align-items: flex-end; */
+}
+
+.message-bubble {
+  max-width: 70%;
+  padding: 1rem 1.3rem;
+  border-radius: 16px;
+  word-wrap: break-word;
+  position: relative;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 8px rgba(63,41,90,0.07);
+  margin-bottom: 0.2rem;
+  background: #fff;
+  color: #3f295a;
+  transition: background 0.2s, color 0.2s;
+}
+
+.message.sent .message-bubble {
+  background: #075e54; /* WhatsApp green for sender */
+  color: #fff;
+  border-bottom-right-radius: 8px;
+}
+
+.message.received .message-bubble {
+  background: #262d31; /* WhatsApp dark gray for receiver */
+  color: #fff;
+  border: 1.5px solid #222629;
+  border-bottom-left-radius: 8px;
+}
+
+.message.private .message-bubble {
+  background: #fbeed7;
+  color: #3f295a;
+  border: 1.5px solid #ffe6a0;
+  border-bottom-right-radius: 8px;
+}
+
+.message-time {
+  font-size: 0.85rem;
+  color: #b0a8b9;
+  margin-top: 0.15rem;
+  text-align: right;
+}
+
+/* Input container */
+.input-container {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: #fff;
+  border-top: 1.5px solid #e3d8f5;
+  box-shadow: 0 -2px 8px rgba(63,41,90,0.04);
+  padding: 1.2rem 2.2rem;
+}
+
+.input-wrapper {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+#messageInput {
+  flex: 1;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e3d8f5;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  background: #f8f9fb;
+  color: #3f295a;
+}
+
+#messageInput:focus {
+  border-color: #a259e6;
+  box-shadow: 0 0 0 3px rgba(162, 89, 230, 0.08);
+}
+
+#sendButton {
+  padding: 0.9rem 1.2rem;
+  background: linear-gradient(90deg, #a259e6 0%, #3f295a 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  height: 52px;
+  box-shadow: 0 2px 8px rgba(63,41,90,0.07);
+}
+
+#sendButton:hover:not(:disabled) {
+  background: linear-gradient(90deg, #3f295a 0%, #a259e6 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
+#sendButton:disabled {
+  background: #e3d8f5;
+  color: #b0a8b9;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 1000;
+  transition: var(--transition);
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .chat-container {
+    margin-left: 0;
+    max-width: 100vw;
+    border-radius: 0;
+  }
+  .user-list-container {
+    display: none;
+  }
+  .messages-container {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+    max-height: calc(100vh - 70px - 80px);
+  }
+  .input-container {
+    padding: 0.7rem 0.7rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .chat-header, .input-container {
+    padding: 0.7rem 0.7rem;
+  }
+  .messages-container {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+  }
+  .modal-content {
+    min-width: 90vw;
+    padding: 1.2rem 0.5rem;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border-color: #000;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .message.received .message-bubble {
+    border: 2px solid var(--dark-color);
+  }
+}
+
+/* User List Styles */
+.user-list-container {
+  height: 100vh;
+  border-radius: 0;
+  top: 0;
+  position: absolute;
+  left: 0;
+  width: 200px;
+  background: rgba(255,255,255,0.95);
+  border-right: 1.5px solid #e0e0e0;
+  overflow-y: auto;
+  z-index: 10;
+  padding: 1.5rem 0.5rem 1rem 0.5rem;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s;
+}
+
+.user-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.user-list-header h2 {
+  font-size: 1.1rem;
+  color: #764ba2;
+  margin: 0;
+  font-weight: 600;
+}
+
+#toggleUserList {
+  background: #f3e8ff;
+  border: none;
+  color: #764ba2;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 0.2rem 0.7rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 1px 4px rgba(118,75,162,0.07);
+}
+
+#toggleUserList:hover {
+  background: #764ba2;
+  color: #fff;
+}
+
+#userList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#userList li {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  color: #333;
+  background: #f8f9fa;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+#userList li.selected, #userList li:hover {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(118,75,162,0.08);
+}
+
+/* Username Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(118,75,162,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  transition: background 0.3s;
+}
+
+.modal-content {
+  background: white;
+  padding: 2.5rem 3rem;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 320px;
+}
+
+#usernameInput {
+  padding: 0.7rem 1.2rem;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  background: #f8f9fa;
+}
+
+#usernameSubmit {
+  padding: 0.7rem 2rem;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  transition: background 0.2s, transform 0.1s;
+  box-shadow: 0 2px 8px rgba(118,75,162,0.07);
+}
+
+#usernameSubmit:hover {
+  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+  transform: scale(1.04);
+}
+
+#usernameError {
+  margin-top: 0.5rem;
+  color: #dc3545 !important;
+  font-size: 1rem;
+}
+
+/* Hide user list when .hidden class is applied */
+.user-list-container.hidden {
+  display: none !important;
+}
+
+/* Expand chat container when user list is hidden */
+.chat-container.full-width {
+  margin-left: 0 !important;
+  max-width: 100vw !important;
+}
+
+.unread-badge {
+  display: inline-block;
+  min-width: 18px;
+  padding: 2px 7px;
+  font-size: 0.85em;
+  background: #e01e5a;
+  color: #fff;
+  border-radius: 10px;
+  margin-left: auto;
+  font-weight: 600;
+  text-align: center;
+}
+
+.selected-user {
+  font-weight: 700;
+  color: #3f295a;
+  font-size: 1.15rem;
+  letter-spacing: 0.5px;
+}
+
+#toggleUserListFloating {
+  display: none;
+  position: absolute;
+  left: 0.5rem;
+  top: 1.2rem;
+  z-index: 1000;
+  background: #f3e8ff;
+  color: #764ba2;
+  border: none;
+  border-radius: 6px;
+  padding: 0.2rem 0.7rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(118,75,162,0.07);
+  transition: background 0.2s, color 0.2s;
+}
+
+#toggleUserListFloating:hover {
+  background: #764ba2;
+  color: #fff;
+}
+
+/* Slack-like layout and theme */
+.slack-root {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: #1a1d21;
+}
+
+.slack-sidebar {
+  width: 270px;
+  background: #2d223a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  border-right: 1.5px solid #3a2e4d;
+  min-width: 220px;
+  max-width: 320px;
+  z-index: 10;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1.2rem 1rem 1.2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  background: #3f295a;
+  border-bottom: 1px solid #3a2e4d;
+}
+
+.sidebar-appname {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.sidebar-section {
+  margin-top: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.sidebar-section-title {
+  font-size: 1.05rem;
+  color: #b9a7d1;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  padding-left: 0.7rem;
+}
+
+.sidebar-userlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-userlist li {
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 0.2rem;
+  font-size: 1.05rem;
+  color: #e3d8f5;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.18s, color 0.18s;
+  position: relative;
+}
+
+.sidebar-userlist li.selected, .sidebar-userlist li:hover {
+  background: #4b3667;
+  color: #fff;
+}
+
+.slack-main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fb;
+  min-width: 0;
+  height: 100vh;
+}

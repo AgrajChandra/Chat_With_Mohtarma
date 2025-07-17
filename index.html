@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Chat App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="slack-root">
+        <!-- Sidebar -->
+        <aside class="slack-sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-appname">Mohtarma</span>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Online Users</div>
+                <ul id="userList" class="sidebar-userlist"></ul>
+            </div>
+        </aside>
+        <!-- Main Area -->
+        <div class="slack-main">
+            <header class="chat-header">
+                <div class="selected-user" id="selectedUserDisplay"></div>
+                <div class="connection-status" id="connectionStatus">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <span id="statusText">Connecting...</span>
+                </div>
+            </header>
+            <div class="messages-container" id="messages">
+                <div class="welcome-message">
+                    <p>Welcome to the chat! Start typing to begin...</p>
+                </div>
+            </div>
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="Type your message..." 
+                        maxlength="500"
+                        autocomplete="off"
+                    >
+                    <button id="sendButton" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Username Modal -->
+    <div class="modal-overlay" id="usernameModal">
+        <div class="modal-content">
+            <h2>Enter your username</h2>
+            <input type="text" id="usernameInput" placeholder="Username" maxlength="20" autocomplete="off">
+            <button id="usernameSubmit">Join Chat</button>
+            <p id="usernameError" style="color:red;display:none;"></p>
+        </div>
+    </div>
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Connecting to chat...</p>
+    </div>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
